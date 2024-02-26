@@ -29,3 +29,29 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[str] = None
+
+
+class TaskBase(BaseModel):
+    title: str
+    content: str
+
+
+class TaskCreate(TaskBase):
+    pass
+
+
+class Task(TaskBase):
+    id: int
+    created_at: datetime
+    owner_id: int
+    owner: UserOut
+
+    class Config:
+        from_attributes = True
+
+
+class TaskOut(BaseModel):
+    task: Task
+
+    class Config:
+        from_attributes: True
