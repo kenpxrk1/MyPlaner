@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, EmailStr
 
@@ -11,7 +11,7 @@ class UserCreate(BaseModel):
 class UserOut(BaseModel):
     id: int
     email: EmailStr
-    created_at: datetime.datetime
+    created_at: datetime
 
     class Config():
         from_attributes = True
@@ -54,4 +54,4 @@ class TaskOut(BaseModel):
     task: Task
 
     class Config:
-        from_attributes: True
+        from_attributes = True
