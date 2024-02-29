@@ -4,6 +4,8 @@ from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from .. import schemas, database, models,  oauth2, utils
 from ..database import get_db
 
+
+
 router = APIRouter(
     tags=['users']
 )
@@ -29,7 +31,7 @@ def get_user(id: int, db: Session = Depends(get_db)):
              response_model=schemas.UserOut)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     
-    hashed_password = utils.hash_password(user.password)
+    hashed_password = utils.get_hash_password(user.password)
     user.password = hashed_password
 
     new_user = models.User(**user.model_dump())
