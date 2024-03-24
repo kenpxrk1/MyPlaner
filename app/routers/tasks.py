@@ -10,8 +10,8 @@ router = APIRouter(
 )
 
 @router.get('/', response_model=List[schemas.Task])
-def get_tasks(db: Session = Depends(get_db)):
-    tasks = db.query(models.Tasks).all()
+def get_tasks(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+    tasks = db.query(models.Tasks).filter(models.Tasks.owner_id == current_user.id).all()
 
     if tasks is None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Tasks does not exits")
