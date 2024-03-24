@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from . import models
 from .routers import auth, user, tasks
 from .database import engine
