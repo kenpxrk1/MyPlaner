@@ -20,7 +20,7 @@ def get_tasks(db: Session = Depends(get_db), current_user: int = Depends(oauth2.
     
     return tasks
 
-"CREATES TASKS BY ONLY AUTH USER AND AUTOMATICALLY CONNECTED TO HIMSELF"
+"""CREATES TASKS BY ONLY AUTH USER AND AUTOMATICALLY CONNECTED TO HIMSELF"""
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
 def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db), 
@@ -32,7 +32,7 @@ def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db),
     db.refresh(new_task)
     return new_task
 
-"UPDATES TASK BY PATH PARAMETER"
+"""UPDATES TASK BY PATH PARAMETER"""
 
 @router.put("/{id}", response_model=schemas.Task)
 def update_task(id: int, updated_post: schemas.TaskCreate, db: Session = Depends(get_db),
@@ -55,7 +55,7 @@ def update_task(id: int, updated_post: schemas.TaskCreate, db: Session = Depends
 
     return task_query.first()
 
-"DELETES TASK BY PATH PARAMETER"
+""" DELETE TASK BY PATH PARAMETERS """
 
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_task(id: int, db: Session = Depends(get_db), 
@@ -76,3 +76,14 @@ def delete_task(id: int, db: Session = Depends(get_db),
     db.commit()
 
     return Response(status_code=status.HTTP_204_NO_CONTENT)    
+
+
+
+""" SEARCHING """
+
+
+@router.get('/search/{query}', response_model=List[schemas.Task])
+def search(query: str, db: Session = Depends(get_db), 
+           current_user: int = Depends(oauth2.get_current_user)):
+    search_result = db.query(models.Tasks).filter(models.Tasks.owner_id == current_user.id).filter(models.Tasks.title.ilike(f"%{query}%")).all()
+    return search_result
