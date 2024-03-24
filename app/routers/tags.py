@@ -9,6 +9,8 @@ router = APIRouter(
     prefix="/tags"
 )
 
+""" ADDING A TAG FOR TASK. !!! DIDNT REALIZE  """
+
 @router.post('/{task_id}/{tag_id}', status_code=status.HTTP_201_CREATED, response_model=schemas.Task)
 def add_tag(task_id: int, tag_id: int, db: Session = Depends(get_db),
             current_user: int = Depends(oauth2.get_current_user)):
@@ -34,8 +36,11 @@ def add_tag(task_id: int, tag_id: int, db: Session = Depends(get_db),
         task.tags = [tag_id]
         db.commit()
     else:
-        task.tags.append(tag_id)
-        db.commit()
-
+        if len(task.tags) < 3:
+            task.tags.append(tag_id)
+            db.commit()
+        else:
+            raise HTTPException(status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+                                detail=f"max tags already added")
 
     return task

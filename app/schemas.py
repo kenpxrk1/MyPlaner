@@ -55,6 +55,7 @@ class Task(TaskBase):
 class TaskUpdate(TaskBase):
     pass 
 
+""" TAG SCHEMA """
 
 class Tag(BaseModel):
     id: int

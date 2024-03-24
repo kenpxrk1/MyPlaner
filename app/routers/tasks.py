@@ -9,6 +9,8 @@ router = APIRouter(
     prefix="/tasks"
 )
 
+""" TAKE AUTH USER OWN TASKS ONLY (ALL) """
+
 @router.get('/', response_model=List[schemas.Task])
 def get_tasks(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     tasks = db.query(models.Tasks).filter(models.Tasks.owner_id == current_user.id).all()
@@ -18,6 +20,7 @@ def get_tasks(db: Session = Depends(get_db), current_user: int = Depends(oauth2.
     
     return tasks
 
+"CREATES TASKS BY ONLY AUTH USER AND AUTOMATICALLY CONNECTED TO HIMSELF"
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
 def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db), 
@@ -29,6 +32,7 @@ def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db),
     db.refresh(new_task)
     return new_task
 
+"UPDATES TASK BY PATH PARAMETER"
 
 @router.put("/{id}", response_model=schemas.Task)
 def update_task(id: int, updated_post: schemas.TaskCreate, db: Session = Depends(get_db),
@@ -51,7 +55,7 @@ def update_task(id: int, updated_post: schemas.TaskCreate, db: Session = Depends
 
     return task_query.first()
 
-
+"DELETES TASK BY PATH PARAMETER"
 
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_task(id: int, db: Session = Depends(get_db), 
