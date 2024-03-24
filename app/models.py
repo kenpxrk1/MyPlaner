@@ -1,7 +1,7 @@
 
 from pydantic import BaseModel
 from sqlalchemy import *
-
+from sqlalchemy.orm import relationship
 
 from app.database import Base
 
@@ -14,6 +14,8 @@ class Tasks(Base):
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, 
                         server_default=text('now()'))
     owner_id = Column(Integer, ForeignKey("Users.id", ondelete="CASCADE"), nullable=False)
+
+    owner = relationship("User")
     
 
 class User(Base):
