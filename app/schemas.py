@@ -40,6 +40,14 @@ class TaskBase(BaseModel):
 class TaskCreate(TaskBase):
     pass
 
+class Task(TaskBase):
+    id: int
+    created_at: datetime
+    owner_id: int
+
+    class Config:
+        from_attributes = True
+
 class TaskUpdate(TaskBase):
     pass 
 

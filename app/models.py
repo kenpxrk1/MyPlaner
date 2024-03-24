@@ -13,6 +13,7 @@ class Tasks(Base):
     content = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, 
                         server_default=text('now()'))
+    owner_id = Column(Integer, ForeignKey("Users.id", ondelete="CASCADE"), nullable=False)
     
 
 class User(Base):
