@@ -44,6 +44,7 @@ class Task(TaskBase):
     id: int
     created_at: datetime
     owner_id: int
+    tags: Optional[list] = None
     owner: UserOut
 
     class Config:
@@ -51,4 +52,9 @@ class Task(TaskBase):
 
 class TaskUpdate(TaskBase):
     pass 
+
+
+class Tag(BaseModel):
+    id: int
+    description: str
 

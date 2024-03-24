@@ -11,6 +11,7 @@ class Tasks(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     title = Column(String, nullable=False)
     content = Column(String, nullable=False)
+    tags = Column(ARRAY(Integer), nullable=True)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, 
                         server_default=text('now()'))
     owner_id = Column(Integer, ForeignKey("Users.id", ondelete="CASCADE"), nullable=False)
@@ -26,5 +27,12 @@ class User(Base):
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, 
                         server_default=text('now()'))
+    
+
+class Tag(Base):
+    __tablename__ = "tags"
+    id = Column(Integer, primary_key=True, nullable=False)
+    description = Column(String, nullable=False, unique=True)
+    
 
 
