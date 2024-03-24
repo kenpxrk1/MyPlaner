@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from typing import Optional
 from pydantic import BaseModel, EmailStr
 
@@ -36,6 +36,8 @@ class TokenData(BaseModel):
 class TaskBase(BaseModel):
     title: str
     content: str
+    starts_at: date
+
 
 class TaskCreate(TaskBase):
     pass
