@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, EmailStr
 
-
+""" USER SCHEMA """
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
@@ -16,6 +16,7 @@ class UserOut(BaseModel):
     class Config():
         from_attributes = True
 
+""" AUTH SCHEMA """
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -28,30 +29,17 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    id: Optional[str] = None
+    id: Optional[int] = None
 
+""" TASK SCHEMA """
 
 class TaskBase(BaseModel):
     title: str
     content: str
 
-
 class TaskCreate(TaskBase):
     pass
 
+class TaskUpdate(TaskBase):
+    pass 
 
-class Task(TaskBase):
-    id: int
-    created_at: datetime
-    owner_id: int
-    owner: UserOut
-
-    class Config:
-        from_attributes = True
-
-
-class TaskOut(BaseModel):
-    task: Task
-
-    class Config:
-        from_attributes = True

@@ -9,7 +9,7 @@ router = APIRouter(
     prefix="/tasks"
 )
 
-@router.get('/', response_model=List[schemas.TaskOut])
+@router.get('/', response_model=List[schemas.TaskBase])
 def get_task(db: Session = Depends(get_db)):
     tasks = db.query(models.Tasks).all()
 
@@ -19,11 +19,11 @@ def get_task(db: Session = Depends(get_db)):
     return tasks
 
 
-@router.post('/', response_model=schemas.TaskOut, status_code=status.HTTP_201_CREATED)
-def create_task(task: schemas.TaskOut, db: Session = Depends(get_db),
+@router.post('/', status_code=status.HTTP_201_CREATED)
+def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db), 
                 current_user: int = Depends(oauth2.get_current_user)):
     new_task = models.Tasks(**task.model_dump())
     db.add(new_task)
     db.commit()
-    db.refresh()
+    db.refresh(new_task)
     return new_task
