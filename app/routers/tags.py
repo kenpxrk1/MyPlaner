@@ -9,7 +9,7 @@ router = APIRouter(
     prefix="/tags"
 )
 
-""" ADDING A TAG FOR TASK. !!! DIDNT REALIZE  """
+"""      ADDING A TAG FOR TASK.         """
 
 @router.post('/{task_id}/{tag_id}', status_code=status.HTTP_201_CREATED, response_model=schemas.Task)
 def add_tag(task_id: int, tag_id: int, db: Session = Depends(get_db),

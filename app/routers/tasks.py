@@ -70,6 +70,21 @@ def get_month_tasks(date_query: datetime.date, db: Session = Depends(get_db), cu
     
     return tasks
 
+""" GET AUTH USER OWN TASKS BY DATE """
+
+@router.get('/tasks_by_date/{date}', response_model=List[schemas.Task])
+def get_tasks_by_date(date: datetime.date, db: Session = Depends(get_db), 
+                      current_user: int = Depends(oauth2.get_current_user)):
+    
+    tasks = db.query(models.Tasks).filter(models.Tasks.owner_id == current_user.id).filter(
+        models.Tasks.starts_at == date)
+    
+    if tasks is None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Tasks for {date} does not exist")
+    
+    return tasks
+
+
 """CREATES TASKS BY ONLY AUTH USER AND AUTOMATICALLY CONNECTED TO HIMSELF"""
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
