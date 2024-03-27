@@ -9,6 +9,13 @@ router = APIRouter(
     prefix="/tags"
 )
 
+""" GET TAGS """
+
+@router.get('/', response_model=List[schemas.Tag])
+def get_tags(db: Session = Depends(get_db)):
+    tags = db.query(models.Tag).all()
+    return tags
+
 """      ADDING A TAG FOR TASK.         """
 
 @router.post('/{task_id}/{tag_id}', status_code=status.HTTP_201_CREATED, response_model=schemas.Task)
