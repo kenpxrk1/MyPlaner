@@ -15,7 +15,7 @@ from models.users import User
 
 async_engine = create_async_engine(
     url=settings.DATABASE_URL,
-    echo=True
+    echo=True,
 )
 
 

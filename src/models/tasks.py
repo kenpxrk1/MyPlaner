@@ -11,9 +11,9 @@ class Task(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str_25]
     content: Mapped[str]
-    tags: Mapped[List["Tag"] | None] = relationship(         # type: ignore
-        back_populates="tags"
-    ) 
-    starts_at: Mapped[datetime.date] 
+    tags: Mapped[List["Task_tag_association"] | None] = relationship(  # type: ignore
+        back_populates="tasks",
+        lazy="selectin"
+    )
+    starts_at: Mapped[datetime.date]
     owner_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
-
