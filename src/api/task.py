@@ -1,10 +1,10 @@
 import datetime
-from typing import Annotated
+from typing import Annotated, List
 from fastapi import APIRouter, Depends
 
 from models.users import User
 from repositories.task import TaskRepository
-from schemas.task import TaskCreate
+from schemas.task import TaskCreate, TaskRead
 from api.dependencies import current_user, task_service_dependency
 from services.task import TaskService
 
@@ -17,7 +17,7 @@ router = APIRouter(
 )
 
 
-@router.get("")
+@router.get("", response_model=List[TaskRead])
 async def get_all_tasks(
     service: task_service_dependency,
     current_user: User = Depends(current_user)
@@ -26,7 +26,7 @@ async def get_all_tasks(
     return all_tasks
 
 
-@router.get("/{date}")
+@router.get("/{date}", response_model=List[TaskRead])
 async def get_tasks_by_date(
     date: datetime.date,
     service: task_service_dependency,
@@ -36,7 +36,7 @@ async def get_tasks_by_date(
     return all_tasks
 
 
-@router.post("")
+@router.post("", response_model=TaskCreate)
 async def create_task(
     new_task: TaskCreate,
     service: task_service_dependency,

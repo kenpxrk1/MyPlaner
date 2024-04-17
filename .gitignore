@@ -1,3 +1,7 @@
 /.venv
 /src/.env
 /.pytest_cache
+alembic/.DS_Store
+.DS_Store
+src/.DS_Store
+alembic/README

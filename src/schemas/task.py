@@ -12,13 +12,16 @@ class TaskCreate(BaseModel):
 
 class TaskRead(TaskCreate):
 
-    tags: list | None
+    tags: list["TagBase"] 
+
+    class Config:
+        from_attributes = True
 
 
 class TaskBase(TaskCreate):
     id: int
     owner_id: int 
-    tags: List[TagBase] | None = None
+    tags: list["TagBase"] 
     
 
 class TaskUpdate(TaskCreate):
