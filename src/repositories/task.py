@@ -38,7 +38,9 @@ class TaskRepository:
             return result
 
     @classmethod
-    async def get_tasks_by_date(cls, owner_id: int, date: datetime.date) -> List[TaskRead]:
+    async def get_tasks_by_date(
+        cls, owner_id: int, date: datetime.date
+    ) -> List[TaskRead]:
         async with async_session() as session:
             stmt = (
                 select(Task)
