@@ -1,6 +1,6 @@
 import datetime
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from .tag import TagBase 
 
@@ -14,8 +14,7 @@ class TaskRead(TaskCreate):
 
     tags: list["TagBase"] 
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(strict=True, from_attributes=True)
 
 
 class TaskBase(TaskCreate):

@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:15
+    container_name: db_app
+    
+    env_file:
+      - .env
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  app:
+      build:
+        context: . 
+      env_file:
+        - .env
+      container_name: fastapi_app
+      command: ["/myplaner-app/docker/app.sh"]
+      ports: 
+        - 9999:8000
+      depends_on:
+        - db
+
+

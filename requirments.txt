@@ -40,6 +40,8 @@ pydantic-settings==2.2.1
 pydantic_core==2.18.1
 PyJWT==2.8.0
 pytest==8.1.1
+pytest-asyncio==0.23.6
+pytest-dotenv==0.5.2
 python-dotenv==1.0.1
 python-multipart==0.0.9
 PyYAML==6.0.1

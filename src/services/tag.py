@@ -18,5 +18,5 @@ class TagService:
         return tags 
     
 
-    async def set_tags(self, task_id, tag_id):
+    async def set_tags(self, task_id, tag_id) -> None:
         await self.repository.set_tags(task_id=task_id, tag_id=tag_id)

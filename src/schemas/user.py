@@ -2,7 +2,7 @@ from typing import Optional
 import uuid
 
 from fastapi_users import schemas
-from pydantic import EmailStr
+from pydantic import ConfigDict, EmailStr
 
 
 class UserRead(schemas.BaseUser[uuid.UUID]):
@@ -12,8 +12,8 @@ class UserRead(schemas.BaseUser[uuid.UUID]):
     is_superuser: bool = False
     is_verified: bool = False
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(strict=True, from_attributes=True)
+
 
 
 class UserCreate(schemas.BaseUserCreate):
