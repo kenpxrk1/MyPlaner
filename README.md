@@ -21,7 +21,7 @@ $ git clone https://github.com/kenpxrk1/MyPlaner
 Запустите приложение из корневой папки с помощью docker-compose:
 
 ```sh
-$ docker compose up
+$ docker-compose up
 ```
 
 
